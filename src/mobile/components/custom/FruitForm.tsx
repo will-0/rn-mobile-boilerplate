@@ -8,26 +8,25 @@ import { useCreateFruitMutation } from '@/state/api';
 import { FormControl, FormControlLabel, FormControlLabelText } from '../ui/form-control';
 import { Select, SelectTrigger, SelectInput, SelectIcon, SelectPortal, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectItem } from "@/components/ui/select";
 import { ChevronDownIcon } from '../ui/icon';
+import { Fruit } from '@/state/api'
 
-
-const colors = [
-    "Red",
-    "Blue",
-    "Green",
-    "Yellow",
-    "Orange"
-]
+const colors = ['Red', 'Yellow', 'Green', 'Blue', 'Purple', 'Orange'];
 
 export default function FruitForm() {
 
-    const [fruitName, setFruitName] = useState('');
-    const [color, setColor] = useState(colors[0]);
+    const [fruitName, setFruitName] = useState<string | undefined>(undefined);
+    const [color, setColor] = useState<string | undefined>(undefined);
     const [addFruit, { isLoading, isSuccess, isError }] = useCreateFruitMutation();
 
     const handleSubmit = async () => {
         if (fruitName && color) {
             try {
-                await addFruit({ name: fruitName, color }).unwrap();
+                const newFruit: Fruit = {
+                    name: fruitName,
+                    color: color,
+                    id: '1234'
+                }
+                await addFruit(newFruit).unwrap();
                 setFruitName('');
                 setColor('');
             } catch (e) {
@@ -37,7 +36,7 @@ export default function FruitForm() {
     };
 
     return (
-        <VStack className='p-8 w-full gap-4'>
+        <VStack className='p-8 w-full gap-4 items-center'>
             <Input>
                 <InputField
                     placeholder="Enter fruit name"
@@ -45,7 +44,7 @@ export default function FruitForm() {
                     onChangeText={setFruitName}
                 />
             </Input>
-            <Select className="flex-0">
+            <Select className="w-full" onValueChange={setColor}>
                 <SelectTrigger variant="outline" size="md" >
                     <SelectInput className='flex-1' placeholder="Select option" />
                     <SelectIcon className="mr-3" as={ChevronDownIcon} />
@@ -57,22 +56,25 @@ export default function FruitForm() {
                             <SelectDragIndicator />
                         </SelectDragIndicatorWrapper>
                         {colors.map((c) => (
-                            <SelectItem
-                                label={c}
-                                key={c}
-                                value={c}
-                            />
+                            <SelectItem key={c} label={c} value={c}>
+                                {c}
+                            </SelectItem>
                         ))}
                     </SelectContent>
                 </SelectPortal>
             </Select>
 
-            <Button className='bg-primary-400' onPress={handleSubmit} isDisabled={isLoading || !fruitName || !color}>
+            <Button className='bg-primary-400' onPress={handleSubmit} isDisabled={!fruitName || !color}>
                 <Text className='text-typography-0'>{isLoading ? 'Submitting...' : 'Submit'}</Text>
             </Button>
-
-            {isSuccess && <Text>Fruit added!</Text>}
-            {isError && <Text>Something went wrong.</Text>}
+            
+            { 
+                isSuccess ?
+                    <Text>Fruit added!</Text>
+                : isError ?
+                    <Text>Something went wrong.</Text>
+                : <Text></Text>
+            }
         </VStack>
     );
 };
