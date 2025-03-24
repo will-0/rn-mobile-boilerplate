@@ -8,7 +8,29 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World"}
 
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/fruits/")
+def read_fruits():
+    fruit1 = {
+        "id": 1,
+        "name": "apple",
+        "color": "red"
+    }
+    fruit2 = {
+        "id": 2,
+        "name": "banana",
+        "color": "yellow"
+    }
+    fruit3 = {
+        "id": 3,
+        "name": "orange",
+        "color": "orange"
+    }
+    return [fruit1, fruit2, fruit3]
+ 
+@app.get("/fruits/{fruit_id}")
+def read_fruit(fruit_id: int):
+    return {
+        "id": fruit_id,
+        "name": "apple",
+        "color": "red"
+    } 
