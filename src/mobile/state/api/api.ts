@@ -25,7 +25,7 @@ export const fruitsApi = createApi({
     }),
 
     // CREATE a new fruit with pessimistic update
-    createFruit: builder.mutation<Fruit, Partial<Fruit>>({
+    createFruit: builder.mutation<Fruit, Fruit>({
       query: (newFruit) => ({
         url: "/fruits",
         method: "POST",
