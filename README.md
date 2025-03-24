@@ -10,3 +10,5 @@ cd ..
 ```
 
 ## Run the App
+
+Use default build task: `Cmd-Shift-B` on Mac
