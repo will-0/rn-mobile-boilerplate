@@ -8,7 +8,7 @@ export interface Fruit {
 }
 
 export const fruitsApi = createApi({
-  reducerPath: "fruitsApi",
+  reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5175/" }),
   tagTypes: ["Fruits"],
   endpoints: (builder) => ({
