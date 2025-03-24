@@ -4,7 +4,7 @@
 
 ```
 uv venv && . .venv/bin/activate
-cd mobile
+cd src/mobile
 npm install
 cd ..
 ```

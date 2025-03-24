@@ -1,13 +1,12 @@
 import BaseView from '@/components/BaseView';
 import { Box } from '@/components/ui/box';
-import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 
-export default function NotFound() {
+export default function ExploreScreen() {
   return (
     <BaseView>
       <Box className='flex-1 justify-center items-center'>
-        <Heading size="md">Not Found</Heading>
+        <Text>Exploration...</Text>
       </Box>
     </BaseView>
   );

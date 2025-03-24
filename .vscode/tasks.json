@@ -17,9 +17,9 @@
         {
             "label": "Start Expo App",
             "type": "shell",
-            "command": "npm start",
+            "command": "npx expo start",
             "options": {
-                "cwd": "${workspaceFolder}/src/finomics-mobile"
+                "cwd": "${workspaceFolder}/src/mobile"
             },
             "group": "build",
             "presentation": {
