@@ -11,6 +11,9 @@ dependencies = [
     "fastapi[standard] (>=0.115.12,<0.116.0)"
 ]
 
+[tool.poetry]
+package-mode = false
+
 [tool.poetry.scripts]
 backend = "src.main:main"
 
