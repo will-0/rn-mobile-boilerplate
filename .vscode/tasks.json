@@ -4,9 +4,9 @@
         {
             "label": "Start Backend",
             "type": "shell",
-            "command": "s/dev/finomics-mobile-backend/up.sh",
+            "command": "docker compose -f compose.yml up --build",
             "options": {
-                "cwd": "${workspaceFolder}/src"
+                "cwd": "${workspaceFolder}"
             },
             "group": "build",
             "presentation": {
