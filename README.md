@@ -2,11 +2,13 @@
 
 ## Installation
 
-```
+```bash
 uv venv && . .venv/bin/activate
-cd src/mobile
+cd src/backend
+poetry install
+cd ../mobile
 npm install
-cd ..
+cd ../..
 ```
 
 ## Run the App
