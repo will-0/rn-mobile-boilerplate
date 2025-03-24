@@ -19,5 +19,5 @@ RUN poetry install --no-root
 # Copy the backend application code
 COPY . /app/
 
-CMD ["poetry", "run", "python", "-m", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["poetry", "run", "python", "-m", "uvicorn", "--reload", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
 
