@@ -9,6 +9,7 @@ import { FormControl, FormControlLabel, FormControlLabelText } from '../ui/form-
 import { Select, SelectTrigger, SelectInput, SelectIcon, SelectPortal, SelectBackdrop, SelectContent, SelectDragIndicator, SelectDragIndicatorWrapper, SelectItem } from "@/components/ui/select";
 import { ChevronDownIcon } from '../ui/icon';
 import { Fruit } from '@/state/api'
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const colors = ['Red', 'Yellow', 'Green', 'Blue', 'Purple', 'Orange'];
 
@@ -17,6 +18,8 @@ export default function FruitForm() {
     const [fruitName, setFruitName] = useState<string | undefined>(undefined);
     const [color, setColor] = useState<string | undefined>(undefined);
     const [addFruit, { isLoading, isSuccess, isError }] = useCreateFruitMutation();
+
+    const safeInsets = useSafeAreaInsets();
 
     const handleSubmit = async () => {
         if (fruitName && color) {
@@ -51,7 +54,7 @@ export default function FruitForm() {
                 </SelectTrigger>
                 <SelectPortal>
                     <SelectBackdrop />
-                    <SelectContent>
+                    <SelectContent style={{paddingBottom: safeInsets.bottom}}>
                         <SelectDragIndicatorWrapper>
                             <SelectDragIndicator />
                         </SelectDragIndicatorWrapper>
