@@ -24,3 +24,9 @@ services:
     volumes:
       - ./local/db/data/mongo:/data/db
     command: mongod --quiet --logpath /dev/null
+
+  auth:
+    image: ghcr.io/navikt/mock-oauth2-server:2.1.10
+    container_name: auth
+    ports:
+      - "5176:8080"
