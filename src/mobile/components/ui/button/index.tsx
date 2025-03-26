@@ -301,7 +301,7 @@ const Button = React.forwardRef<
   );
 });
 
-type IButtonTextProps = React.ComponentPropsWithoutRef<typeof UIButton.Text> &
+export type IButtonTextProps = React.ComponentPropsWithoutRef<typeof UIButton.Text> &
   VariantProps<typeof buttonTextStyle> & { className?: string };
 
 const ButtonText = React.forwardRef<
