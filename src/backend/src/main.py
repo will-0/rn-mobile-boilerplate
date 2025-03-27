@@ -1,10 +1,12 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
 from pydantic import BaseModel
 import debugpy
-from database.mongo import fruits_collection
+
+from .database.mongo import fruits_collection
+from .auth import auth_user
 
 # Enable debugpy listener
 if os.getenv("DEBUGPY_ENABLED", "true").lower() == "true":
@@ -35,7 +37,7 @@ def read_root():
     return {"Hello": "World"}
 
 @app.get("/fruits")
-async def read_fruits():
+async def read_fruits(current_user: str = Depends(auth_user)):
     fruits = await fruits_collection.find({}).to_list()
     parsed_fruits = [Fruit(**fruit) for fruit in fruits]
     return parsed_fruits
