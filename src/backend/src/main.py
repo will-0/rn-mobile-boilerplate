@@ -34,7 +34,7 @@ class Fruit(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return "ping"
 
 @app.get("/fruits")
 async def read_fruits(current_user: str = Depends(auth_user)):
@@ -43,15 +43,15 @@ async def read_fruits(current_user: str = Depends(auth_user)):
     return parsed_fruits
  
 @app.get("/fruits/{fruit_id}")
-def read_fruit(fruit_id: str):
+def read_fruit(fruit_id: str, current_user: str = Depends(auth_user)):
     return Fruit(name="apple", color="red") 
 
 @app.post("/fruits", status_code=status.HTTP_201_CREATED)
-async def create_fruit(fruit: Fruit):
+async def create_fruit(fruit: Fruit, current_user: str = Depends(auth_user)):
     await fruits_collection.insert_one(dict(fruit))
     return fruit
 
 @app.delete("/fruits/{fruit_id}")
-async def delete_fruit(fruit_id: str):
+async def delete_fruit(fruit_id: str, current_user: str = Depends(auth_user)):
     await fruits_collection.delete_many({})
     return {"message": "All fruits deleted"}
