@@ -1,0 +1,2 @@
+export const ACCESS_TOKEN_KEY = '__MYAPP_ACCESS_TOKEN__';
+export const REFRESH_TOKEN_KEY = '__MYAPP_REFRESH_TOKEN__';
