@@ -9,8 +9,8 @@ services:
     ports:
       - "${LOCALHOST_PORT_BACKEND}:80"
       - "${LOCALHOST_PORT_DEBUGPY}:5678" # Expose debugpy port for remote debugging
-    environment:
-      - DEBUGPY_ENABLED=true # Enable debugpy
+    env_file:
+      - .env.dev
     
   db:
     image: mongo:5.0
