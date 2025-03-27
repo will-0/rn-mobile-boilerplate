@@ -1,6 +1,6 @@
 import requests
 import jwt
-class InsecureJWKClient:
+class InsecureJWKSClient:
     def __init__(self, jwks_uri):
         self.jwks_uri = jwks_uri
         try:
