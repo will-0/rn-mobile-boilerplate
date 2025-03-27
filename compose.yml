@@ -11,6 +11,8 @@ services:
       - "${LOCALHOST_PORT_DEBUGPY}:5678" # Expose debugpy port for remote debugging
     env_file:
       - .env.dev
+    depends_on:
+      - mock-oauth2-server
     
   db:
     image: mongo:5.0
