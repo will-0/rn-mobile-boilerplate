@@ -10,14 +10,14 @@ const redirectUri = AuthSession.makeRedirectUri();
 
 export default function InitialScreen() {
 
-    const [token, setToken] = useState<string | null>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
-        if (token) {
+        if (isLoggedIn) {
             router.navigate('/(tabs)/home')
         }
-    }, [token]);
+    }, [isLoggedIn]);
 
     return (
         <BaseView>
@@ -29,7 +29,7 @@ export default function InitialScreen() {
                     client_id='0000-0000'
                     redirect_uri={redirectUri}
                     scopes={['openid', 'profile', 'email', 'offline_access']}
-                    setToken={setToken}
+                    setIsLoggedIn={setIsLoggedIn}
                 />
             </Box>
         </BaseView>
