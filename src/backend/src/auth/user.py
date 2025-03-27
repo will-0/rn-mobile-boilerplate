@@ -7,10 +7,7 @@ from .dev import InsecureJWKSClient
 
 # Get security scheme and jwk_client
 security = HTTPBearer()
-if os.environ.get("OAUTH2_ALLOW_INSECURE_JWKS", "true").lower() == "false":
-    jwk_client = jwt.PyJWKClient(os.environ.get("OAUTH2_JWKS_URI"))
-else:
-    jwk_client = InsecureJWKSClient(os.environ.get("OAUTH2_JWKS_URI"))
+jwk_client = jwt.PyJWKClient(os.environ.get("OAUTH2_JWKS_URI"))
 
 def auth_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> str:
     """
@@ -34,7 +31,7 @@ def auth_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> 
             key=signing_key.key,
             algorithms=["RS256"],
             options=options,
-            audience=os.environ.get("OAUTH2_CLIENT_ID"),
+            audience=os.environ.get("OAUTH2_AUDIENCE"),
             issuer=os.environ.get("OAUTH2_ISSUER")
         )
     except jwt.ExpiredSignatureError:
