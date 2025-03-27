@@ -1,3 +1,4 @@
+from jwt.api_jwk import PyJWK
 class InsecureJWKSClient:
     def __init__(self, jwks_uri):
         import requests
@@ -11,8 +12,9 @@ class InsecureJWKSClient:
             raise Exception("Failed to fetch JWKS")
 
 
-    def get_signing_key_from_jwt(self, token: str):
+    def get_signing_key_from_jwt(self, token: str) -> PyJWK:
         import jwt
+        from jwt.algorithms import RSAAlgorithm
 
         # Manually search for the key by 'kid'
         unverified_header = jwt.get_unverified_header(token)
@@ -21,7 +23,17 @@ class InsecureJWKSClient:
         if key is None:
             raise Exception("Matching key not found")
 
-        # Construct the public key and decode
-        public_key = jwt.algorithms.RSAAlgorithm.from_jwk(key)
+        # # Construct the public key and decode
+        # public_key = RSAAlgorithm.from_jwk(key)
 
-        return public_key
+        return PyJWK(
+            {
+                "kty": key["kty"],
+                "alg": key["alg"],
+                "use": key["use"],
+                "kid": key["kid"],
+                "n": key["n"],
+                "e": key["e"]
+            },
+            algorithm="RS256"
+        )
