@@ -3,19 +3,14 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import jwt
 import os
 
-def get_jwk_client():
-    """
-    Returns a JWK client with certification verification enabled.
-    """
-    if os.environ.get("OAUTH_JWKS_URL_ALLOW_INSECURE") == "true":
-        from .dev import get_insecure_jwk_client
-        return get_insecure_jwk_client()
-    else:
-        return jwt.PyJWKClient(os.environ.get("OAUTH2_JWKS_URI"))
+from .dev import InsecureJWKSClient
 
 # Get security scheme and jwk_client
 security = HTTPBearer()
-jwk_client = get_jwk_client()
+if os.environ.get("OAUTH2_ALLOW_INSECURE_JWKS", "true").lower() == "false":
+    jwk_client = jwt.PyJWKClient(os.environ.get("OAUTH2_JWKS_URI"))
+else:
+    jwk_client = InsecureJWKSClient(os.environ.get("OAUTH2_JWKS_URI"))
 
 def auth_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> str:
     """
