@@ -33,7 +33,7 @@ class Fruit(BaseModel):
     color: str
 
 @app.get("/")
-def read_root():
+def ping():
     return "ping"
 
 @app.get("/fruits")
