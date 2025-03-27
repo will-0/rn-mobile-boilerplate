@@ -7,9 +7,19 @@ export interface Fruit {
   color: string;
 }
 
+const auth_token = "12345"
+
 export const fruitsApi = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5175/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:5175/",
+    prepareHeaders: (headers) => {
+      if (auth_token) {
+        headers.set("Authorization", `Bearer ${auth_token}`);
+      }
+      return headers;
+    },
+  }),
   tagTypes: ["Fruits"],
   endpoints: (builder) => ({
     // GET all fruits
