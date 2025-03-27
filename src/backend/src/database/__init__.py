@@ -1,1 +1,0 @@
-from .mongo import fruits_collection

@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
 from pydantic import BaseModel
 import debugpy
+from database.mongo import fruits_collection
 
 # Enable debugpy listener
 if os.getenv("DEBUGPY_ENABLED", "true").lower() == "true":
