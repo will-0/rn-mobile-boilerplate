@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import * as SecureStore from 'expo-secure-store';
+import { ACCESS_TOKEN_KEY } from '@/constants/StorageKeys';
 
 // Define a simple Fruit type
 export interface Fruit {
@@ -7,15 +9,14 @@ export interface Fruit {
   color: string;
 }
 
-const auth_token = "12345"
-
 export const fruitsApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5175/",
-    prepareHeaders: (headers) => {
-      if (auth_token) {
-        headers.set("Authorization", `Bearer ${auth_token}`);
+    prepareHeaders: async (headers) => {
+      const token = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },
